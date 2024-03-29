@@ -53,6 +53,31 @@ import {
       type: "error",
       message: error.message ? `${error.name}: ${error.message}` : error.name,
     });
+    console.error(error);
+  }, []);
+  return (
+    <ConnectionProvider endpoint={endpoint}>
+      <WalletProvider 
+      wallets={wallets}
+      onError={onError}
+      autoConnect={autoConnect}
+      >
+        <ReactUIWalletModalProvider>{children}</ReactUIWalletModalProvider>
+      </WalletProvider>
+    </ConnectionProvider>
+  );
+ };
 
-  });
+ export const ConnectionProvider: FC<{ children: ReactNode }> = ({
+  children,
+ }) => {
+  return (
+    <>
+    <NetworkConfigurationProvider>
+      <AutoConnectProvider>
+        <WalletContextProvider>{children}</WalletContextProvider>
+      </AutoConnectProvider>
+    </NetworkConfigurationProvider>
+    </>
+  );
  };
