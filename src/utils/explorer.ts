@@ -1,6 +1,6 @@
 import { PublicKey, Transaction } from "@solan/web3.js";
 
-export function getExplorerUrl(
+export function getExplorerUrl (
   endpoint: string,
   viewTypeOrItemAddress: "inspector" | PublicKey | string,
   itemType = "address"
@@ -8,7 +8,7 @@ export function getExplorerUrl(
   const getClusterUrlParam = () => {
     let cluster = "";
     if (endpoint === "localnet") {
-      cluster = `custome&customeUrl=${encodeURIComponent(
+      cluster = `custome&customeUrl=${encodeURLComponent(
         "http://127.0.0.1:8899"
       )}`;
     } else if (endpoint === "https://api.devnet.solana.com") {
