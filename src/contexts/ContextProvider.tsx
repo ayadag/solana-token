@@ -25,11 +25,11 @@ import {
   const { networkConfiguration } = useNetworkConfiguration();
   const network = networkConfiguration as WalletAdapterNetwork;
 
-  const originalEndPoint = useMemo(() => clusterApiUrl(network, [network]));
+  const originalEndPoint = useMemo(() => clusterApiUrl(network), [network]);
   
   let endpoint;
 
-  if(network == "mainnet-bete"){
+  if(network == "mainnet-beta"){
     endpoint = "URL";
   } else if (network == "devnet"){
     endpoint = originalEndPoint;
@@ -68,9 +68,7 @@ import {
   );
  };
 
- export const ConnectionProvider: FC<{ children: ReactNode }> = ({
-  children,
- }) => {
+ export const ContextProvider: FC<{ children: ReactNode }> = ({ children }) => {
   return (
     <>
     <NetworkConfigurationProvider>
