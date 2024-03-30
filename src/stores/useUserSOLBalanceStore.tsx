@@ -1,9 +1,27 @@
-import React from 'react'
+import create, { state } from "zustand";
+import { Connection, PublicKey, LAMPORTS_PER_SOL } from "@solana/web3.js";
 
-const useUserSOLBalanceStore = () => {
-  return (
-    <div>useUserSOLBalanceStore</div>
-  )
+interface useUserSOLBalanceStore extends state {
+  balance: number;
+  getUserSOLBalance: (Publickey: PublicKey, connection: Connection) => void;
 }
 
-export default useUserSOLBalanceStore
+const useUserSOLBalanceStore = create<UserSOLBalanceStore>((set, _get) => ({
+  balance: 0,
+  getUserSOLBalance: async (publickey, connection) => {
+    let balance = 0;
+
+    try {
+      balance = await connection.getBalance(publickey, "confirmed");
+      balance = balance / LAMPORTS_PER_SOL;
+    } catch (error) {
+      console.log(error);
+    }
+    set((s) => {
+      s.balance = balance;
+      console.log("Balance:", balance);
+    });
+  },
+}));
+
+export default useUserSOLBalanceStore;
